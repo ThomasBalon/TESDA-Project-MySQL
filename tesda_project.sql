@@ -18,13 +18,13 @@
 */
 
 /* DELIMITER //
-CREATE PROCEDURE check_fullname(IN _last VARCHAR(50), IN _first VARCHAR(50))
+CREATE PROCEDURE check_fullname(IN _last VARCHAR(50), IN _first VARCHAR(50), IN _middle CHAR(10), IN _suffix CHAR(10))
 BEGIN
-	SELECT UPPER(last_name), UPPER(first_name) FROM scholarship_employment WHERE last_name = _last AND first_name = _first;
+	SELECT UPPER(last_name), UPPER(first_name), UPPER(middle_initial), UPPER(suffix) FROM scholarship_employment 
+    WHERE last_name = _last AND first_name = _first AND middle_initial = _middle AND suffix = _suffix;
 END//
 DELIMITER ;
 */
-
 
 /* DELIMITER //
 CREATE PROCEDURE submit_data(IN _lastname VARCHAR(50), IN _firstname VARCHAR(50), IN _middleinitial CHAR(10), IN _suffix CHAR(10), IN _sex VARCHAR(50), IN _birthdate DATE, 
