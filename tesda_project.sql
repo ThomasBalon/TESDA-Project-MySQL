@@ -86,8 +86,12 @@ DELIMITER ;
 /*
 ALTER TABLE scholarship_employment ADD verification_status VARCHAR(50);
 ALTER TABLE scholarship_employment ADD employment_status VARCHAR(50);
+ALTER TABLE scholarship_employment ADD contact_number INT AFTER birthdate;
+ALTER TABLE scholarship_employment ADD email VARCHAR(50) AFTER address;
 ALTER TABLE scholarship_employment DROP COLUMN verification_status;
 ALTER TABLE scholarship_employment DROP COLUMN employment_status;
+ALTER TABLE scholarship_employment CHANGE middle_initial middle_name VARCHAR(50);
+ALTER TABLE scholarship_employment MODIFY COLUMN qualification VARCHAR(50);
 */
 
 -- CALL update_data(1, "Solayao", "Dave Andrew", "A.", "", "Male", "2001-07-03", "Blk. 21 Lot 15, Berkeley Heights Subd., Brgy. Pulong Sta. Cruz, Sta. Rosa City, Laguna", "BSIT", "STI College Sta. Rosa", "N/A", "Santa Rosa", "PWSP", 2024);
