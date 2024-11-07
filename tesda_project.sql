@@ -40,21 +40,6 @@ DELIMITER ;
 */
 
 /*
-DELIMITER //
-CREATE PROCEDURE update_data(IN _id INT, IN _lastname VARCHAR(50), IN _firstname VARCHAR(50), IN _middleinitial CHAR(10), IN _suffix CHAR(10), IN _sex VARCHAR(50), IN _birthdate DATE, 
-								IN _address VARCHAR(255), IN _qualification VARCHAR(255), IN _tviname VARCHAR(255), IN _district VARCHAR(255), IN _city VARCHAR(255), 
-                                IN _scholarshiptype VARCHAR(255), IN _graduationyear INT, IN _verificationstatus VARCHAR(50), IN _employmentstatus VARCHAR(50))
-BEGIN
-	UPDATE initial_records 
-    SET last_name = _lastname, first_name = _firstname, middle_initial = _middleinitial, suffix = _suffix, sex = _sex, birthdate = _birthdate, address = _address, 
-		qualification = _qualification, tvi_name = _tviname, district = _district, city = _city, scholarship_type = _scholarshiptype, graduation_year = _graduationyear, 
-        verification_status = _verificationstatus, employment_status = _employmentstatus
-	WHERE id = _id;
-END//
-DELIMITER ;
-*/
-
-/*
 RENAME TABLE scholarship_employment TO initial_records;
 ALTER TABLE initial_records ADD verification_status VARCHAR(50);
 ALTER TABLE initial_records ADD contact_number INT AFTER birthdate;
