@@ -40,6 +40,47 @@ DELIMITER ;
 */
 
 /*
+DELIMITER //
+CREATE PROCEDURE get_new_record_id(IN _lastname VARCHAR(50), IN _firstname VARCHAR(50))
+BEGIN
+	SELECT id FROM initial_records 
+    WHERE last_name = _lastname AND first_name = _firstname;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
+CREATE PROCEDURE read_initial_records()
+BEGIN
+	SELECT id, last_name, first_name, middle_name, extension_name, graduation_year, qualification 
+    FROM initial_records;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
+CREATE PROCEDURE clear_all_records()
+BEGIN
+	SET FOREIGN_KEY_CHECKS = 0;
+	TRUNCATE TABLE initial_records;
+    SET FOREIGN_KEY_CHECKS = 1;
+END//
+DELIMITER ;
+*/
+
+/*
+SELECT initial_records.id, last_name, first_name, middle_name, extension_name, sex, birthdate, contact_number, initial_records.address, email, sector, qualification, tvi, district, 
+		city, scholarship_type, graduation_year, verif_means, verif_date, verif_status, response_type, refer_to_company, referral_date, reason_no_referral, reason_not_interested, 
+        follow_up_1, follow_up_2, invalid_contact, company_name, employment_records.address, job_title, employment_status, hired_date, submit_docs_date, interview_date, 
+        reason_not_hired
+FROM ((initial_records 
+INNER JOIN verification_records ON initial_records.id = verification_records.id) 
+INNER JOIN employment_records ON initial_records.id = employment_records.id);
+*/
+
+/*
 RENAME TABLE scholarship_employment TO initial_records;
 ALTER TABLE initial_records ADD verification_status VARCHAR(50);
 ALTER TABLE initial_records ADD contact_number INT AFTER birthdate;
@@ -48,8 +89,15 @@ ALTER TABLE initial_records CHANGE middle_initial middle_name VARCHAR(50);
 ALTER TABLE initial_records MODIFY COLUMN qualification VARCHAR(50);
 */
 
--- CALL update_data(1, "Solayao", "Dave Andrew", "A.", "", "Male", "2001-07-03", "Blk. 21 Lot 15, Berkeley Heights Subd., Brgy. Pulong Sta. Cruz, Sta. Rosa City, Laguna", "BSIT", "STI College Sta. Rosa", "N/A", "Santa Rosa", "PWSP", 2024);
+/*
+DELETE FROM verification_records WHERE id = 1;
+DELETE FROM employment_records WHERE id = 1;
+*/
 
+-- CALL update_data(1, "Solayao", "Dave Andrew", "A.", "", "Male", "2001-07-03", "Blk. 21 Lot 15, Berkeley Heights Subd., Brgy. Pulong Sta. Cruz, Sta. Rosa City, Laguna", "BSIT", "STI College Sta. Rosa", "N/A", "Santa Rosa", "PWSP", 2024);
+-- call refresh_all_records()
+
+-- CALL clear_all_records();
 -- TRUNCATE TABLE initial_records;
 -- DROP TABLE initial_records;
 

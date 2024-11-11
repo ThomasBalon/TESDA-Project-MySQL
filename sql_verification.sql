@@ -18,7 +18,17 @@
 
 /*
 DELIMITER //
-CREATE PROCEDURE update_record(IN _id INT, IN _means VARCHAR(50), IN _date DATE, IN _status VARCHAR(50), IN _responsetype VARCHAR(50), IN _canrefer BOOLEAN, IN _refdate DATE, 
+CREATE PROCEDURE initialise_verification_record(IN _id INT)
+BEGIN
+	INSERT INTO verification_records 
+    VALUES (_id, null, null, null, null, null, null, null, null, null, null, null);
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
+CREATE PROCEDURE submit_verification_record(IN _id INT, IN _means VARCHAR(50), IN _date DATE, IN _status VARCHAR(50), IN _responsetype VARCHAR(50), IN _canrefer BOOLEAN, IN _refdate DATE, 
 								IN _rsn_noref VARCHAR(255), IN _rsn_notint VARCHAR(255), IN _fwp_date_1 DATE, IN _fwup_date_2 DATE, IN _invalidcontact BOOLEAN)
 BEGIN
 	INSERT INTO verification_records 
@@ -27,4 +37,5 @@ END//
 DELIMITER ;
 */
 
--- DELETE FROM verification_records WHERE id = 1
+-- DELETE FROM verification_records WHERE id = 1;
+-- SELECT * FROM tesda_db.verification_records;

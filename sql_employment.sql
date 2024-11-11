@@ -15,6 +15,16 @@
 
 /*
 DELIMITER //
+CREATE PROCEDURE initialise_employment_record(IN _id INT)
+BEGIN
+	INSERT INTO employment_records 
+    VALUES (_id, null, null, null, null, null, null, null, null);
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
 CREATE PROCEDURE submit_employment_record(IN _id INT, IN _companyname VARCHAR(50), IN _address VARCHAR(255), IN _job_title VARCHAR(50), IN _empstatus VARCHAR(50), 
 											IN _hired DATE, IN _submitdocs DATE, IN _interview DATE, IN _rsn_nothired VARCHAR(50))
 BEGIN
@@ -23,3 +33,17 @@ BEGIN
 END//
 DELIMITER ;
 */
+
+/*
+DELIMITER //
+CREATE PROCEDURE read_employment_records()
+BEGIN
+	SELECT employment_status 
+    FROM employment_records;
+END//
+DELIMITER ;
+*/
+
+-- DELETE FROM employment_records WHERE id = 1;
+
+-- SELECT * FROM tesda_db.employment_records;
