@@ -28,6 +28,18 @@ DELIMITER ;
 
 /*
 DELIMITER //
+CREATE PROCEDURE retrieve_verification_record(IN _id INT)
+BEGIN
+	SELECT verif_means, verif_date, verif_status, response_type, refer_to_company, referral_date, reason_no_referral, reason_not_interested, 
+			follow_up_1, follow_up_2, invalid_contact 
+    FROM verification_records 
+    WHERE id = _id;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
 CREATE PROCEDURE submit_verification_record(IN _id INT, IN _means VARCHAR(50), IN _date DATE, IN _status VARCHAR(50), IN _responsetype VARCHAR(50), IN _canrefer BOOLEAN, IN _refdate DATE, 
 								IN _rsn_noref VARCHAR(255), IN _rsn_notint VARCHAR(255), IN _fwp_date_1 DATE, IN _fwup_date_2 DATE, IN _invalidcontact BOOLEAN)
 BEGIN

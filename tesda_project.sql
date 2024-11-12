@@ -41,6 +41,16 @@ DELIMITER ;
 
 /*
 DELIMITER //
+CREATE PROCEDURE retrieve_initial_record(IN _id INT)
+BEGIN
+	SELECT * FROM initial_records 
+    WHERE id = _id;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
 CREATE PROCEDURE get_new_record_id(IN _lastname VARCHAR(50), IN _firstname VARCHAR(50))
 BEGIN
 	SELECT id FROM initial_records 
@@ -51,10 +61,45 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE read_initial_records()
+CREATE PROCEDURE search_employment_status(IN _status VARCHAR(50))
 BEGIN
-	SELECT id, last_name, first_name, middle_name, extension_name, graduation_year, qualification 
-    FROM initial_records;
+	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+    FROM initial_records 
+	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
+    WHERE employment_status = _status;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
+CREATE PROCEDURE search_graduation_year(IN _year INT)
+BEGIN
+	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+    FROM initial_records 
+	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
+    WHERE graduation_year = _year;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
+CREATE PROCEDURE search_qualification_title(IN _title VARCHAR(50))
+BEGIN
+	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+    FROM initial_records 
+	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
+    WHERE qualification = _title;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
+CREATE PROCEDURE delete_record(IN _id INT)
+BEGIN
+	DELETE FROM initial_records WHERE id = _id;
 END//
 DELIMITER ;
 */
@@ -71,13 +116,18 @@ DELIMITER ;
 */
 
 /*
-SELECT initial_records.id, last_name, first_name, middle_name, extension_name, sex, birthdate, contact_number, initial_records.address, email, sector, qualification, tvi, district, 
+DELIMITER //
+CREATE PROCEDURE read_all_records()
+BEGIN
+	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, sex, birthdate, contact_number, initial_records.address, email, sector, qualification, tvi, district, 
 		city, scholarship_type, graduation_year, verif_means, verif_date, verif_status, response_type, refer_to_company, referral_date, reason_no_referral, reason_not_interested, 
         follow_up_1, follow_up_2, invalid_contact, company_name, employment_records.address, job_title, employment_status, hired_date, submit_docs_date, interview_date, 
         reason_not_hired
-FROM ((initial_records 
-INNER JOIN verification_records ON initial_records.id = verification_records.id) 
-INNER JOIN employment_records ON initial_records.id = employment_records.id);
+	FROM ((initial_records 
+	LEFT JOIN verification_records ON initial_records.id = verification_records.id) 
+	LEFT JOIN employment_records ON initial_records.id = employment_records.id);
+END//
+DELIMITER ;
 */
 
 /*
@@ -90,12 +140,12 @@ ALTER TABLE initial_records MODIFY COLUMN qualification VARCHAR(50);
 */
 
 /*
+DELETE FROM initial_records WHERE id = 1;
 DELETE FROM verification_records WHERE id = 1;
 DELETE FROM employment_records WHERE id = 1;
 */
 
--- CALL update_data(1, "Solayao", "Dave Andrew", "A.", "", "Male", "2001-07-03", "Blk. 21 Lot 15, Berkeley Heights Subd., Brgy. Pulong Sta. Cruz, Sta. Rosa City, Laguna", "BSIT", "STI College Sta. Rosa", "N/A", "Santa Rosa", "PWSP", 2024);
--- call refresh_all_records()
+-- CALL read_all_records();
 
 -- CALL clear_all_records();
 -- TRUNCATE TABLE initial_records;

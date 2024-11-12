@@ -25,6 +25,16 @@ DELIMITER ;
 
 /*
 DELIMITER //
+CREATE PROCEDURE retrieve_employment_record(IN _id INT)
+BEGIN
+	SELECT * FROM employment_records 
+    WHERE id = _id;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
 CREATE PROCEDURE submit_employment_record(IN _id INT, IN _companyname VARCHAR(50), IN _address VARCHAR(255), IN _job_title VARCHAR(50), IN _empstatus VARCHAR(50), 
 											IN _hired DATE, IN _submitdocs DATE, IN _interview DATE, IN _rsn_nothired VARCHAR(50))
 BEGIN
@@ -46,4 +56,5 @@ DELIMITER ;
 
 -- DELETE FROM employment_records WHERE id = 1;
 
+-- CALL read_employment_records();
 -- SELECT * FROM tesda_db.employment_records;
