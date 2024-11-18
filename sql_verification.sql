@@ -49,5 +49,6 @@ END//
 DELIMITER ;
 */
 
+-- ALTER TABLE verification_records MODIFY COLUMN refer_to_company TINYINT;
 -- DELETE FROM verification_records WHERE id = 1;
 -- SELECT * FROM tesda_db.verification_records;
