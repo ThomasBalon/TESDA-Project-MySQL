@@ -16,12 +16,16 @@
 );
 */
 
+-- ALTER TABLE verification_records MODIFY COLUMN refer_to_company TINYINT;
+-- DELETE FROM verification_records WHERE id = 1;
+-- SELECT * FROM tesda_db.verification_records;
+
 /*
 DELIMITER //
 CREATE PROCEDURE initialise_verification_record(IN _id INT)
 BEGIN
 	INSERT INTO verification_records 
-    VALUES (_id, null, null, null, null, null, null, null, null, null, null, null);
+    VALUES (_id, "", null, "", "", 0, null, "", "", null, null, false);
 END//
 DELIMITER ;
 */
@@ -40,15 +44,16 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE submit_verification_record(IN _id INT, IN _means VARCHAR(50), IN _date DATE, IN _status VARCHAR(50), IN _responsetype VARCHAR(50), IN _canrefer BOOLEAN, IN _refdate DATE, 
-								IN _rsn_noref VARCHAR(255), IN _rsn_notint VARCHAR(255), IN _fwp_date_1 DATE, IN _fwup_date_2 DATE, IN _invalidcontact BOOLEAN)
+CREATE PROCEDURE update_verification_record(IN _id INT, IN _means VARCHAR(50), IN _date DATE, IN _status VARCHAR(50), 
+				IN _responsetype VARCHAR(50), IN _canrefer TINYINT, IN _refdate DATE, IN _rsn_noref VARCHAR(255), IN _rsn_notint VARCHAR(255), 
+                IN _fwup_date_1 DATE, IN _fwup_date_2 DATE, IN _invalidcontact BOOLEAN)
 BEGIN
-	INSERT INTO verification_records 
-    VALUES (_id, _means, _date, _status, _responsetype, _canrefer, _refdate, _rsn_noref, _rsn_notint, _fwp_date_1, _fwup_date_2, _invalidcontact);
+	UPDATE verification_records 
+    SET verif_means = _means, verif_date = _date, verif_status = _status, response_type = _responsetype, refer_to_company = _canrefer, referral_date = _refdate, 
+		reason_no_referral = _rsn_noref, reason_not_interested = _rsn_notint, follow_up_1 = _fwup_date_1, follow_up_2 = _fwup_date_2, 
+        invalid_contact = _invalidcontact 
+    WHERE id = _id;
 END//
 DELIMITER ;
 */
 
--- ALTER TABLE verification_records MODIFY COLUMN refer_to_company TINYINT;
--- DELETE FROM verification_records WHERE id = 1;
--- SELECT * FROM tesda_db.verification_records;
