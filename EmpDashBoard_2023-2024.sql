@@ -35,6 +35,12 @@
 */
 
 /*
+ALTER TABLE empdashboard_2023_2024 MODIFY COLUMN Verif_Date VARCHAR(50);
+ALTER TABLE empdashboard_2023_2024 MODIFY COLUMN Emp_Date VARCHAR(50);
+ALTER TABLE empdashboard_2023_2024 MODIFY COLUMN Follow_Up VARCHAR(50);
+*/
+
+/*
 DELIMITER //
 CREATE PROCEDURE Insert_Data(IN district VARCHAR(50), IN city VARCHAR(50), IN tvi VARCHAR(50), IN qualification VARCHAR(50), IN sector VARCHAR(50), IN last_name VARCHAR(50), 
 							IN first_name VARCHAR(50), IN middle_name VARCHAR(50), IN extension_name VARCHAR(50), IN full_name VARCHAR(200), IN scholarship_type VARCHAR(50), 
