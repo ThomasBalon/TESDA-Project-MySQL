@@ -1,22 +1,30 @@
 /* CREATE TABLE IF NOT EXISTS initial_records (
-	id INT AUTO_INCREMENT, 
-	last_name VARCHAR(50), 
-    first_name VARCHAR(50), 
-    middle_name VARCHAR(50), 
-    extension_name CHAR(10), 
-    sex VARCHAR(50), 
-    birthdate DATE, 
-    contact_number VARCHAR(12), 
-    address VARCHAR(255), 
-    email VARCHAR(50), 
-    sector VARCHAR(50), 
-    qualification VARCHAR(50), 
-    tvi VARCHAR(50), 
-    district VARCHAR(50), 
-    city VARCHAR(50), 
-    scholarship_type VARCHAR(50), 
-    graduation_year INT, 
-    PRIMARY KEY(id)
+	Id INT AUTO_INCREMENT, 
+    district VARCHAR(50) NULL, 
+    city VARCHAR(50) NULL, 
+    tvi VARCHAR(255) NULL, 
+    qualification_title VARCHAR(255) NULL, 
+    sector VARCHAR(255) NULL, 
+    last_name VARCHAR(255) NOT NULL, 
+    first_name VARCHAR(255) NOT NULL, 
+    middle_name VARCHAR(255) NULL, 
+    extension_name CHAR(10) NULL, 
+    full_name VARCHAR(255) NULL, 
+    sex VARCHAR(50) NULL, 
+    birthdate VARCHAR(50) NULL, 
+    contact_number VARCHAR(12) NULL, 
+    email VARCHAR(255) NULL, 
+    scholarship_type VARCHAR(50) NULL, 
+    training_status VARCHAR(50) NULL, 
+    assessment_result VARCHAR(50) NULL, 
+    employment_before_training VARCHAR(50) NULL, 
+    occupation VARCHAR(255) NULL, 
+    employer_name VARCHAR(255) NULL, 
+    employment_type VARCHAR(255) NULL, 
+    address VARCHAR(255) NULL, 
+    date_hired VARCHAR(50) NULL, 
+    allocation VARCHAR(50) NULL, 
+    PRIMARY KEY(Id)
 );
 */
 
@@ -45,7 +53,7 @@ DELETE FROM employment_records WHERE id = 1;
 
 /*
 DELIMITER //
-CREATE PROCEDURE check_fullname(IN _last VARCHAR(50), IN _first VARCHAR(50), IN _middle CHAR(10), IN _extn CHAR(10))
+CREATE PROCEDURE check_fullname(IN _last VARCHAR(255), IN _first VARCHAR(255), IN _middle VARCHAR(255), IN _extn CHAR(10))
 BEGIN
 	SELECT UPPER(last_name), UPPER(first_name), UPPER(middle_name), UPPER(extension_name) FROM initial_records 
     WHERE last_name = _last AND first_name = _first AND middle_name = _middle AND extension_name = _extn;
@@ -77,9 +85,9 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE get_new_record_id(IN _lastname VARCHAR(50), IN _firstname VARCHAR(50))
+CREATE PROCEDURE get_new_record_id(IN _lastname VARCHAR(255), IN _firstname VARCHAR(255))
 BEGIN
-	SELECT id FROM initial_records 
+	SELECT Id FROM initial_records 
     WHERE last_name = _lastname AND first_name = _firstname;
 END//
 DELIMITER ;
@@ -104,19 +112,21 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE refresh_records()
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id;
+	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id;
 END//
 DELIMITER ;
 */
 
 /*
 DELIMITER //
-CREATE PROCEDURE retrieve_initial_record(IN _id INT)
+CREATE PROCEDURE retrieve_initial_record(IN _Id INT)
 BEGIN
-	SELECT * FROM initial_records 
-    WHERE id = _id;
+	SELECT last_name, first_name, middle_name, extension_name, sex, birthdate, contact_number, address, email, sector, qualification_title, tvi, district, city, 
+			scholarship_type, allocation 
+    FROM initial_records 
+    WHERE Id = _Id;
 END//
 DELIMITER ;
 */
@@ -219,12 +229,16 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE submit_data(IN _lastname VARCHAR(50), IN _firstname VARCHAR(50), IN _middleinitial CHAR(10), IN _suffix CHAR(10), IN _sex VARCHAR(50), IN _birthdate DATE, 
-								IN _address VARCHAR(255), IN _qualification VARCHAR(255), IN _tviname VARCHAR(255), IN _district VARCHAR(255), IN _city VARCHAR(255), 
-                                IN _scholarshiptype VARCHAR(255), IN _graduationyear INT)
+CREATE PROCEDURE submit_record_data(IN _district VARCHAR(50), IN _city VARCHAR(50), IN _tvi VARCHAR(255), IN _qualification VARCHAR(255), 
+								IN _sector VARCHAR(255), IN _lastname VARCHAR(255), IN _firstname VARCHAR(255), IN _middlename VARCHAR(255), IN _extname CHAR(10), 
+                                IN _fullname VARCHAR(255), IN _sex VARCHAR(50), IN _birthdate VARCHAR(50), IN _contactnum VARCHAR(12), IN _email VARCHAR(255), 
+                                IN _scholarship VARCHAR(50), IN _address VARCHAR(255), IN _allocation VARCHAR(50))
 BEGIN
-	INSERT INTO initial_records (last_name, first_name, middle_initial, suffix, sex, birthdate, address, qualification, tvi_name, district, city, scholarship_type, graduation_year) 
-    VALUES (_lastname, _firstname, _middleinitial, _suffix, _sex, _birthdate, _address, _qualification, _tviname, _district, _city, _scholarshiptype, _graduationyear);
+	INSERT INTO initial_records (district, city, tvi, qualification_title, sector, last_name, first_name, middle_name, extension_name, full_name, sex, 
+									birthdate, contact_number, email, scholarship_type, training_status, assessment_result, employment_before_training, 
+                                    occupation, employer_name, employment_type, address, date_hired, allocation) 
+    VALUES (_district, _city, _tvi, _qualification, _sector, _lastname, _firstname, _middlename, _extname, _fullname, _sex, _birthdate, _contactnum, _email, 
+			_scholarship, "", "", "", "", "", "", _address, "", _allocation);
 END//
 DELIMITER ;
 */

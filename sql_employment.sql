@@ -1,14 +1,14 @@
 /* CREATE TABLE IF NOT EXISTS employment_records (
-	id INT NOT NULL, 
-    company_name VARCHAR(50), 
-    address VARCHAR(255), 
-    job_title VARCHAR(50), 
-    employment_status VARCHAR(50), 
-    hired_date DATE, 
-    submit_docs_date DATE, 
-    interview_date DATE, 
-    reason_not_hired VARCHAR(50), 
-    FOREIGN KEY(id) REFERENCES initial_records(id)
+	Id INT NOT NULL, 
+    company_name VARCHAR(255) NULL, 
+    company_address VARCHAR(255)  NULL, 
+    job_title VARCHAR(255) NULL, 
+    employment_status VARCHAR(255) NULL, 
+    hired_date VARCHAR(50) NULL, 
+    submitted_documents_date VARCHAR(50) NULL, 
+    interview_date VARCHAR(50) NULL, 
+    not_hired_reason VARCHAR(50) NULL, 
+    FOREIGN KEY(Id) REFERENCES initial_records(Id)
     ON DELETE CASCADE
 );
 */
@@ -18,21 +18,21 @@
 
 /*
 DELIMITER //
-CREATE PROCEDURE initialise_employment_record(IN _id INT)
+CREATE PROCEDURE initialise_employment_record(IN _Id INT)
 BEGIN
 	INSERT INTO employment_records 
-    VALUES (_id, "", "", "", "", null, null, null, "");
+    VALUES (_Id, "", "", "", "", "", "", "", "");
 END//
 DELIMITER ;
 */
 
 /*
 DELIMITER //
-CREATE PROCEDURE retrieve_employment_record(IN _id INT)
+CREATE PROCEDURE retrieve_employment_record(IN _Id INT)
 BEGIN
-	SELECT company_name, address, job_title, employment_status, hired_date, submit_docs_date, interview_date, reason_not_hired 
+	SELECT company_name, company_address, job_title, employment_status, hired_date, submitted_documents_date, interview_date, not_hired_reason  
     FROM employment_records 
-    WHERE id = _id;
+    WHERE Id = _Id;
 END//
 DELIMITER ;
 */

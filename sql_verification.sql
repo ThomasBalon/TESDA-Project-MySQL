@@ -1,17 +1,17 @@
 /* CREATE TABLE IF NOT EXISTS verification_records (
-	id INT NOT NULL, 
-    verif_means VARCHAR(50), 
-    verif_date DATE, 
-    verif_status VARCHAR(50), 
-    response_type VARCHAR(50),  
-    refer_to_company BOOLEAN, 
-    referral_date DATE, 
-    reason_no_referral VARCHAR(255), 
-    reason_not_interested VARCHAR(255), 
-    follow_up_1 DATE, 
-    follow_up_2 DATE, 
-    invalid_contact BOOLEAN, 
-    FOREIGN KEY(id) REFERENCES initial_records(id)
+	Id INT NOT NULL, 
+    verification_means VARCHAR(50) NULL, 
+    verification_date VARCHAR(50) NULL, 
+    verification_status VARCHAR(50) NULL, 
+    follow_up_date_1 VARCHAR(50) NULL, 
+    follow_up_date_2 VARCHAR(50) NULL, 
+    response_status VARCHAR(50) NULL, 
+    not_interested_reason VARCHAR(255) NULL, 
+    referral_status CHAR(10) NULL, 
+    referral_date VARCHAR(50) NULL, 
+    no_referral_reason VARCHAR(255) NULL, 
+    invalid_contact CHAR(10) NULL, 
+    FOREIGN KEY(Id) REFERENCES initial_records(Id)
     ON DELETE CASCADE
 );
 */
@@ -22,37 +22,37 @@
 
 /*
 DELIMITER //
-CREATE PROCEDURE initialise_verification_record(IN _id INT)
+CREATE PROCEDURE initialise_verification_record(IN _Id INT)
 BEGIN
 	INSERT INTO verification_records 
-    VALUES (_id, "", null, "", "", 0, null, "", "", null, null, false);
+    VALUES (_Id, "", "", "", "", "", "", "", "", "", "", "");
 END//
 DELIMITER ;
 */
 
 /*
 DELIMITER //
-CREATE PROCEDURE retrieve_verification_record(IN _id INT)
+CREATE PROCEDURE retrieve_verification_record(IN _Id INT)
 BEGIN
-	SELECT verif_means, verif_date, verif_status, response_type, refer_to_company, referral_date, reason_no_referral, reason_not_interested, 
-			follow_up_1, follow_up_2, invalid_contact 
+	SELECT verification_means, verification_date, verification_status, follow_up_date_1, follow_up_date_2, response_status, not_interested_reason, 
+			referral_status, referral_date, no_referral_reason, invalid_contact 
     FROM verification_records 
-    WHERE id = _id;
+    WHERE Id = _Id;
 END//
 DELIMITER ;
 */
 
 /*
 DELIMITER //
-CREATE PROCEDURE update_verification_record(IN _id INT, IN _means VARCHAR(50), IN _date DATE, IN _status VARCHAR(50), 
-				IN _responsetype VARCHAR(50), IN _canrefer TINYINT, IN _refdate DATE, IN _rsn_noref VARCHAR(255), IN _rsn_notint VARCHAR(255), 
-                IN _fwup_date_1 DATE, IN _fwup_date_2 DATE, IN _invalidcontact BOOLEAN)
+CREATE PROCEDURE update_verification_record(IN _Id INT, IN _means VARCHAR(50), IN _date VARCHAR(50), IN _status VARCHAR(50), 
+				IN _followup_1 VARCHAR(50), IN _followup_2 VARCHAR(50), IN _response VARCHAR(50), IN _notinterested VARCHAR(255), IN _referralstatus CHAR(10), 
+                IN _referraldate VARCHAR(50), IN _noreferral VARCHAR(255), IN _invalidcontact CHAR(10))
 BEGIN
 	UPDATE verification_records 
-    SET verif_means = _means, verif_date = _date, verif_status = _status, response_type = _responsetype, refer_to_company = _canrefer, referral_date = _refdate, 
-		reason_no_referral = _rsn_noref, reason_not_interested = _rsn_notint, follow_up_1 = _fwup_date_1, follow_up_2 = _fwup_date_2, 
-        invalid_contact = _invalidcontact 
-    WHERE id = _id;
+    SET verification_means = _means, verification_date = _date, verification_status = _status, follow_up_date_1 = _followup_1, follow_up_date_2 = _followup_2, 
+		response_status = _response, not_interested_reason = _notinterested, referral_status = _referralstatus, referral_date = _referraldate, 
+        no_referral_reason = _noreferral, invalid_contact = _invalidcontact 
+    WHERE Id = _Id;
 END//
 DELIMITER ;
 */
