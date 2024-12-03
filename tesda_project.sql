@@ -51,6 +51,18 @@ DELETE FROM verification_records WHERE id = 1;
 DELETE FROM employment_records WHERE id = 1;
 */
 
+DELIMITER //
+CREATE PROCEDURE exceldata_import(IN _district VARCHAR(50), IN _city VARCHAR(50), IN _tvi VARCHAR(255), IN _qualification VARCHAR(255), IN _sector VARCHAR(255), IN _lastname VARCHAR(255), 
+							IN _firstname VARCHAR(255), IN _middlename VARCHAR(255), IN _extnname CHAR(10), IN _fullname VARCHAR(255), IN _contactnum VARCHAR(12), IN _email VARCHAR(255), 
+                            IN _scholarship VARCHAR(50), IN _training VARCHAR(50), IN _assessment VARCHAR(50), IN _emp_before_training VARCHAR(50), IN _occupation VARCHAR(255), 
+                            IN _employer VARCHAR(255), IN _emptype VARCHAR(255), IN _address VARCHAR(255), IN _datehired VARCHAR(50), IN _allocation VARCHAR(50), 
+                            IN _verifmeans VARCHAR(50), IN _verifdate VARCHAR(50), IN _verifstatus VARCHAR(50), IN _followupdate VARCHAR(50), IN _response VARCHAR(50), 
+                            IN _notinterested VARCHAR(255), IN _refstatus CHAR(10), IN _companyname VARCHAR(255), IN _companyaddress VARCHAR(255), IN _jobtitle VARCHAR(255), 
+                            IN _empstatus VARCHAR(255), IN _hireddate VARCHAR(50))
+BEGIN
+END//
+DELIMITER ;
+
 /*
 DELIMITER //
 CREATE PROCEDURE check_fullname(IN _last VARCHAR(255), IN _first VARCHAR(255), IN _middle VARCHAR(255), IN _extn CHAR(10))
