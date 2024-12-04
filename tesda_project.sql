@@ -51,6 +51,7 @@ DELETE FROM verification_records WHERE id = 1;
 DELETE FROM employment_records WHERE id = 1;
 */
 
+/*
 DELIMITER //
 CREATE PROCEDURE exceldata_import(IN _district VARCHAR(50), IN _city VARCHAR(50), IN _tvi VARCHAR(255), IN _qualification VARCHAR(255), IN _sector VARCHAR(255), IN _lastname VARCHAR(255), 
 							IN _firstname VARCHAR(255), IN _middlename VARCHAR(255), IN _extnname CHAR(10), IN _fullname VARCHAR(255), IN _contactnum VARCHAR(12), IN _email VARCHAR(255), 
@@ -60,8 +61,18 @@ CREATE PROCEDURE exceldata_import(IN _district VARCHAR(50), IN _city VARCHAR(50)
                             IN _notinterested VARCHAR(255), IN _refstatus CHAR(10), IN _companyname VARCHAR(255), IN _companyaddress VARCHAR(255), IN _jobtitle VARCHAR(255), 
                             IN _empstatus VARCHAR(255), IN _hireddate VARCHAR(50))
 BEGIN
+	INSERT INTO initial_records (district, city, tvi, qualification_title, sector, last_name, first_name, middle_name, extension_name, full_name, contact_number, email, 
+								scholarship_type, training_status, assessment_result, employment_before_training, occupation, employer_name, employment_type, address, date_hired, 
+                                allocation) 
+	VALUES (_district, _city, _qualification, _sector, _lastname, _firstname, _middlename, _extnname, _fullname, _contactnum, _email, _scholarship, _training, _assessment, _emp_before_training, 
+			_occupation, _employer, _emptype, _address, _datehired, _allocation);
+	INSERT INTO verifcation_records (verification_means, verification_date, verification_status, follow_up_date_1, response_status, not_interested_reason, referral_status) 
+    VALUES (_verifmeans, _verifdate, _verifstatus, _followupdate, _response, _notinterested, _refstatus);
+    INSERT INTO employment_records (company_name, company_address, job_title, employment_status, hired_date) 
+    VALUES (_companyname, _companyaddress, _jobtitle, _empstatus, _hireddate);
 END//
 DELIMITER ;
+*/
 
 /*
 DELIMITER //
