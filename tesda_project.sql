@@ -8,11 +8,11 @@
     last_name VARCHAR(255) NOT NULL, 
     first_name VARCHAR(255) NOT NULL, 
     middle_name VARCHAR(255) NULL, 
-    extension_name CHAR(10) NULL, 
+    extension_name VARCHAR(50) NULL, 
     full_name VARCHAR(255) NULL, 
     sex VARCHAR(50) NULL, 
     birthdate VARCHAR(50) NULL, 
-    contact_number VARCHAR(12) NULL, 
+    contact_number VARCHAR(16) NULL, 
     email VARCHAR(255) NULL, 
     scholarship_type VARCHAR(50) NULL, 
     training_status VARCHAR(50) NULL, 
@@ -29,6 +29,7 @@
 */
 
 -- CALL read_all_records();
+-- CALL exceldata_readall();
 
 -- CALL clear_all_records();
 -- TRUNCATE TABLE initial_records;
@@ -54,7 +55,7 @@ DELETE FROM employment_records WHERE id = 1;
 /*
 DELIMITER //
 CREATE PROCEDURE exceldata_import(IN _district VARCHAR(50), IN _city VARCHAR(50), IN _tvi VARCHAR(255), IN _qualification VARCHAR(255), IN _sector VARCHAR(255), IN _lastname VARCHAR(255), 
-							IN _firstname VARCHAR(255), IN _middlename VARCHAR(255), IN _extnname CHAR(10), IN _fullname VARCHAR(255), IN _contactnum VARCHAR(12), IN _email VARCHAR(255), 
+							IN _firstname VARCHAR(255), IN _middlename VARCHAR(255), IN _extnname VARCHAR(50), IN _fullname VARCHAR(255), IN _contactnum VARCHAR(16), IN _email VARCHAR(255), 
                             IN _scholarship VARCHAR(50), IN _training VARCHAR(50), IN _assessment VARCHAR(50), IN _emp_before_training VARCHAR(50), IN _occupation VARCHAR(255), 
                             IN _employer VARCHAR(255), IN _emptype VARCHAR(255), IN _address VARCHAR(255), IN _datehired VARCHAR(50), IN _allocation VARCHAR(50), 
                             IN _verifmeans VARCHAR(50), IN _verifdate VARCHAR(50), IN _verifstatus VARCHAR(50), IN _followupdate VARCHAR(50), IN _response VARCHAR(50), 
@@ -64,12 +65,27 @@ BEGIN
 	INSERT INTO initial_records (district, city, tvi, qualification_title, sector, last_name, first_name, middle_name, extension_name, full_name, contact_number, email, 
 								scholarship_type, training_status, assessment_result, employment_before_training, occupation, employer_name, employment_type, address, date_hired, 
                                 allocation) 
-	VALUES (_district, _city, _qualification, _sector, _lastname, _firstname, _middlename, _extnname, _fullname, _contactnum, _email, _scholarship, _training, _assessment, _emp_before_training, 
-			_occupation, _employer, _emptype, _address, _datehired, _allocation);
+	VALUES (_district, _city, _tvi, _qualification, _sector, _lastname, _firstname, _middlename, _extnname, _fullname, _contactnum, _email, _scholarship, _training, _assessment, 
+			_emp_before_training, _occupation, _employer, _emptype, _address, _datehired, _allocation);
 	INSERT INTO verifcation_records (verification_means, verification_date, verification_status, follow_up_date_1, response_status, not_interested_reason, referral_status) 
     VALUES (_verifmeans, _verifdate, _verifstatus, _followupdate, _response, _notinterested, _refstatus);
     INSERT INTO employment_records (company_name, company_address, job_title, employment_status, hired_date) 
     VALUES (_companyname, _companyaddress, _jobtitle, _empstatus, _hireddate);
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
+CREATE PROCEDURE exceldata_readall() 
+BEGIN
+	SELECT initial_records.Id, district, city, tvi, qualification_title, sector, last_name, first_name, middle_name, extension_name, full_name, contact_number, email, 
+			scholarship_type, training_status, assessment_result, employment_before_training, occupation, employer_name, employment_type, address, date_hired, allocation, 
+            verification_means, verification_date, verification_status, follow_up_date_1, response_status, not_interested_reason, referral_status, company_name, company_address, 
+            job_title, employment_status, hired_date 
+    FROM ((initial_records 
+    LEFT JOIN verification_records ON initial_records.Id = verification_records.Id) 
+    LEFT JOIN employment_records ON initial_records.Id = employment_records.Id);
 END//
 DELIMITER ;
 */
@@ -253,8 +269,8 @@ DELIMITER ;
 /*
 DELIMITER //
 CREATE PROCEDURE submit_record_data(IN _district VARCHAR(50), IN _city VARCHAR(50), IN _tvi VARCHAR(255), IN _qualification VARCHAR(255), 
-								IN _sector VARCHAR(255), IN _lastname VARCHAR(255), IN _firstname VARCHAR(255), IN _middlename VARCHAR(255), IN _extname CHAR(10), 
-                                IN _fullname VARCHAR(255), IN _sex VARCHAR(50), IN _birthdate VARCHAR(50), IN _contactnum VARCHAR(12), IN _email VARCHAR(255), 
+								IN _sector VARCHAR(255), IN _lastname VARCHAR(255), IN _firstname VARCHAR(255), IN _middlename VARCHAR(255), IN _extname VARCHAR(50), 
+                                IN _fullname VARCHAR(255), IN _sex VARCHAR(50), IN _birthdate VARCHAR(50), IN _contactnum VARCHAR(16), IN _email VARCHAR(255), 
                                 IN _scholarship VARCHAR(50), IN _address VARCHAR(255), IN _allocation VARCHAR(50))
 BEGIN
 	INSERT INTO initial_records (district, city, tvi, qualification_title, sector, last_name, first_name, middle_name, extension_name, full_name, sex, 
