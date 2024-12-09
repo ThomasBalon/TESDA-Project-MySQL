@@ -15,26 +15,14 @@
     contact_number VARCHAR(16) NULL, 
     email VARCHAR(255) NULL, 
     scholarship_type VARCHAR(50) NULL, 
-    training_status VARCHAR(50) NULL, 
-    assessment_result VARCHAR(50) NULL, 
-    employment_before_training VARCHAR(50) NULL, 
-    occupation VARCHAR(255) NULL, 
-    employer_name VARCHAR(255) NULL, 
-    employment_type VARCHAR(255) NULL, 
     address VARCHAR(255) NULL, 
-    date_hired VARCHAR(50) NULL, 
     allocation VARCHAR(50) NULL, 
     PRIMARY KEY(Id)
 );
 */
 
 -- CALL read_all_records();
--- CALL exceldata_readall();
-
 -- CALL clear_all_records();
--- TRUNCATE TABLE initial_records;
--- DROP TABLE initial_records;
-
 -- SET AUTOCOMMIT = ON;
 
 /*
@@ -78,9 +66,9 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE delete_record(IN _id INT)
+CREATE PROCEDURE delete_record(IN _Id INT)
 BEGIN
-	DELETE FROM initial_records WHERE id = _id;
+	DELETE FROM initial_records WHERE Id = _Id;
 END//
 DELIMITER ;
 */
@@ -99,13 +87,14 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE read_all_records()
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, sex, birthdate, contact_number, initial_records.address, email, sector, qualification, tvi, district, 
-		city, scholarship_type, graduation_year, verif_means, verif_date, verif_status, response_type, refer_to_company, referral_date, reason_no_referral, reason_not_interested, 
-        follow_up_1, follow_up_2, invalid_contact, company_name, employment_records.address, job_title, employment_status, hired_date, submit_docs_date, interview_date, 
-        reason_not_hired
-	FROM ((initial_records 
-	LEFT JOIN verification_records ON initial_records.id = verification_records.id) 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id);
+	SELECT initial_records.Id, district, city, tvi, qualification_title, sector, last_name, first_name, middle_name, extension_name, full_name, 
+			contact_number, email, scholarship_type, training_status, assessment_result, employment_before_training, occupation, employer_name, 
+            employment_type, address, date_hired, allocation, verification_means, verification_date, verification_status, follow_up_date_1, 
+            response_status, not_interested_reason, referral_status, company_name, company_address, job_title, employment_status, hired_date, remarks, 
+            count, no_of_graduates, no_of_employed, verification, job_vacancies 
+    FROM ((initial_records LEFT JOIN verification_records ON initial_records.Id = verification_records.Id) 
+    LEFT JOIN employment_records ON initial_records.Id = employment_records.Id) 
+    LEFT JOIN external_records ON initial_records.Id = external_records.Id;
 END//
 DELIMITER ;
 */
@@ -114,7 +103,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE refresh_records()
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
+	SELECT initial_records.Id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
 	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id;
 END//
@@ -125,8 +114,8 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE retrieve_initial_record(IN _Id INT)
 BEGIN
-	SELECT last_name, first_name, middle_name, extension_name, sex, birthdate, contact_number, address, email, sector, qualification_title, tvi, district, city, 
-			scholarship_type, allocation 
+	SELECT last_name, first_name, middle_name, extension_name, sex, birthdate, contact_number, address, email, sector, qualification_title, tvi, 
+			district, city, scholarship_type, allocation 
     FROM initial_records 
     WHERE Id = _Id;
 END//
@@ -135,11 +124,11 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE search_employment_status(IN _status VARCHAR(50))
+CREATE PROCEDURE search_employment_status(IN _status VARCHAR(255))
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+	SELECT initial_records.Id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
+	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id 
     WHERE employment_status = _status;
 END//
 DELIMITER ;
@@ -149,9 +138,9 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE search_extension_name(IN _name VARCHAR(50))
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+	SELECT initial_records.Id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
+	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id 
     WHERE extension_name = _name;
 END//
 DELIMITER ;
@@ -159,11 +148,11 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE search_firstname(IN _name VARCHAR(50))
+CREATE PROCEDURE search_firstname(IN _name VARCHAR(255))
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+	SELECT initial_records.Id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
+	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id 
     WHERE first_name = _name;
 END//
 DELIMITER ;
@@ -171,35 +160,35 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE search_graduation_year(IN _year INT)
+CREATE PROCEDURE search_graduation_year(IN _year VARCHAR(50))
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+	SELECT initial_records.Id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
-    WHERE graduation_year = _year;
+	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id 
+    WHERE allocation = _year;
 END//
 DELIMITER ;
 */
 
 /*
 DELIMITER //
-CREATE PROCEDURE search_id(IN _id INT)
+CREATE PROCEDURE search_Id(IN _Id INT)
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+	SELECT initial_records.Id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
-    WHERE initial_records.id = _id;
+	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id 
+    WHERE initial_records.Id = _Id;
 END//
 DELIMITER ;
 */
 
 /*
 DELIMITER //
-CREATE PROCEDURE search_lastname(IN _name VARCHAR(50))
+CREATE PROCEDURE search_lastname(IN _name VARCHAR(255))
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+	SELECT initial_records.Id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
+	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id
     WHERE last_name = _name;
 END//
 DELIMITER ;
@@ -207,11 +196,11 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE search_middlename(IN _name VARCHAR(50))
+CREATE PROCEDURE search_middlename(IN _name VARCHAR(255))
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+	SELECT initial_records.Id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
+	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id 
     WHERE middle_name = _name;
 END//
 DELIMITER ;
@@ -219,28 +208,28 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE search_qualification_title(IN _title VARCHAR(50))
+CREATE PROCEDURE search_qualification_title(IN _title VARCHAR(255))
 BEGIN
-	SELECT initial_records.id, last_name, first_name, middle_name, extension_name, employment_status, graduation_year, qualification 
+	SELECT initial_records.Id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
     FROM initial_records 
-	LEFT JOIN employment_records ON initial_records.id = employment_records.id 
-    WHERE qualification = _title;
+	LEFT JOIN employment_records ON initial_records.Id = employment_records.Id 
+    WHERE qualification_title = _title;
 END//
 DELIMITER ;
 */
 
 /*
 DELIMITER //
-CREATE PROCEDURE submit_record_data(IN _district VARCHAR(50), IN _city VARCHAR(50), IN _tvi VARCHAR(255), IN _qualification VARCHAR(255), 
-								IN _sector VARCHAR(255), IN _lastname VARCHAR(255), IN _firstname VARCHAR(255), IN _middlename VARCHAR(255), IN _extname VARCHAR(50), 
-                                IN _fullname VARCHAR(255), IN _sex VARCHAR(50), IN _birthdate VARCHAR(50), IN _contactnum VARCHAR(16), IN _email VARCHAR(255), 
-                                IN _scholarship VARCHAR(50), IN _address VARCHAR(255), IN _allocation VARCHAR(50))
+CREATE PROCEDURE PROCEDURE `submit_record_data`(IN _district VARCHAR(50), IN _city VARCHAR(50), IN _tvi VARCHAR(255), 
+								IN _qualification VARCHAR(255), IN _sector VARCHAR(255), IN _lastname VARCHAR(255), IN _firstname VARCHAR(255), 
+                                IN _middlename VARCHAR(255), IN _extname VARCHAR(50), IN _fullname VARCHAR(255), IN _sex VARCHAR(50), 
+                                IN _birthdate VARCHAR(50), IN _contactnum VARCHAR(16), IN _email VARCHAR(255), IN _scholarship VARCHAR(50), 
+                                IN _address VARCHAR(255), IN _allocation VARCHAR(50))
 BEGIN
 	INSERT INTO initial_records (district, city, tvi, qualification_title, sector, last_name, first_name, middle_name, extension_name, full_name, sex, 
-									birthdate, contact_number, email, scholarship_type, training_status, assessment_result, employment_before_training, 
-                                    occupation, employer_name, employment_type, address, date_hired, allocation) 
-    VALUES (_district, _city, _tvi, _qualification, _sector, _lastname, _firstname, _middlename, _extname, _fullname, _sex, _birthdate, _contactnum, _email, 
-			_scholarship, "", "", "", "", "", "", _address, "", _allocation);
+								birthdate, contact_number, email, scholarship_type, address, allocation) 
+    VALUES (_district, _city, _tvi, _qualification, _sector, _lastname, _firstname, _middlename, _extname, _fullname, _sex, _birthdate, _contactnum, 
+			_email, _scholarship, _address, _allocation);
 END//
 DELIMITER ;
 */

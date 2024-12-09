@@ -20,7 +20,7 @@
 
 /*
 DELIMITER //
-CREATE PROCEDURE initialise_external_record (IN Id INT) 
+CREATE PROCEDURE initialise_external_record(IN Id INT)
 BEGIN
 	INSERT INTO external_records 
     VALUES (_Id, "", "", "", "", "", "", "", "", "", "", "", "", "");
@@ -48,22 +48,6 @@ BEGIN
     INSERT INTO external_records 
     VALUES (_Id, _training, _assessment, _empbeforetraining, _occupation, _employer, _emptype, _datehired, _remarks, _count, _graduates, _employed, 
 			_verification, _jobvacancies);
-END//
-DELIMITER ;
-*/
-
-/*
-DELIMITER //
-CREATE PROCEDURE exceldata_readall()
-BEGIN
-	SELECT initial_records.Id, district, city, tvi, qualification_title, sector, last_name, first_name, middle_name, extension_name, full_name, 
-			contact_number, email, scholarship_type, training_status, assessment_result, employment_before_training, occupation, employer_name, 
-            employment_type, address, date_hired, allocation, verification_means, verification_date, verification_status, follow_up_date_1, 
-            response_status, not_interested_reason, referral_status, company_name, company_address, job_title, employment_status, hired_date, remarks, 
-            count, no_of_graduates, no_of_employed, verification, job_vacancies 
-    FROM ((initial_records LEFT JOIN verification_records ON initial_records.Id = verification_records.Id) 
-    LEFT JOIN employment_records ON initial_records.Id = employment_records.Id) 
-    LEFT JOIN external_records ON initial_records.Id = external_records.Id;
 END//
 DELIMITER ;
 */

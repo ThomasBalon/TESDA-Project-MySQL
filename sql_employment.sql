@@ -39,13 +39,14 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE update_employment_record(IN _id INT, IN _companyname VARCHAR(50), IN _address VARCHAR(255), IN _job_title VARCHAR(50), IN _empstatus VARCHAR(50), 
-											IN _hired DATE, IN _submitdocs DATE, IN _interview DATE, IN _rsn_nothired VARCHAR(50))
+CREATE PROCEDURE update_employment_record(IN _Id INT, IN _companyname VARCHAR(255), IN _address VARCHAR(255), 
+											IN _jobtitle VARCHAR(255), IN _empstatus VARCHAR(255), IN _hired VARCHAR(50), IN _submitdocs VARCHAR(50), 
+                                            IN _interview VARCHAR(50), IN _nothired VARCHAR(50))
 BEGIN
 	UPDATE employment_records 
-    SET company_name = _companyname, address = _address, job_title = _job_title, employment_status = _empstatus, hired_date = _hired, 
-		submit_docs_date = _submitdocs, interview_date = _interview, reason_not_hired = _rsn_nothired 
-    WHERE id = _id;
+    SET company_name = _companyname, company_address = _address, job_title = _jobtitle, employment_status = _empstatus, hired_date = _hired, 
+		submitted_documents_date = _submitdocs, interview_date = _interview, not_hired_reason = _nothired 
+    WHERE Id = _Id;
 END//
 DELIMITER ;
 */
