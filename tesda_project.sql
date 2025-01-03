@@ -42,10 +42,10 @@ DELETE FROM employment_records WHERE id = 1;
 
 /*
 DELIMITER //
-CREATE PROCEDURE check_fullname(IN _last VARCHAR(255), IN _first VARCHAR(255), IN _middle VARCHAR(255), IN _extn CHAR(10))
+CREATE PROCEDURE check_fullname(IN _name VARCHAR(255))
 BEGIN
-	SELECT UPPER(last_name), UPPER(first_name), UPPER(middle_name), UPPER(extension_name) FROM initial_records 
-    WHERE last_name = _last AND first_name = _first AND middle_name = _middle AND extension_name = _extn;
+	SELECT full_name FROM initial_records 
+    WHERE full_name = _name;
 END//
 DELIMITER ;
 */
