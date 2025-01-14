@@ -24,7 +24,7 @@
 -- CALL read_all_records();
 -- CALL clear_all_records();
 -- SET AUTOCOMMIT = ON;
--- INSERT INTO initial_records (last_name, first_name, full_name) VALUE ("Dela Cruz", "Juan", "Dela Cruz, Juan");
+-- INSERT INTO initial_records (last_name, first_name, middle_name, full_name) VALUE ("Solayao", "Dave Andrew", "Alano", "Solayao, Dave Andrew Alano");
 
 /*
 RENAME TABLE scholarship_employment TO initial_records;
