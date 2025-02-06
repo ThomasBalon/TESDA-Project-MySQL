@@ -22,7 +22,7 @@
 */
 
 -- CALL read_all_records();
--- CALL clear_all_records();
+-- employment_recordsexternal_recordsCALL clear_all_records();
 -- SET AUTOCOMMIT = ON;
 -- INSERT INTO initial_records (last_name, first_name, middle_name, full_name) VALUE ("Solayao", "Dave Andrew", "Alano", "Solayao, Dave Andrew Alano");
 
@@ -43,9 +43,9 @@ DELETE FROM employment_records WHERE id = 1;
 
 /*
 DELIMITER //
-CREATE PROCEDURE check_fullname(IN _name VARCHAR(255))
+CREATE PROCEDURE `check_fullname`(IN _name VARCHAR(255))
 BEGIN
-	SELECT full_name FROM initial_records 
+	SELECT full_name FROM graduates 
     WHERE full_name = _name;
 END//
 DELIMITER ;
@@ -53,13 +53,10 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE clear_all_records()
+CREATE PROCEDURE `clear_all_records`()
 BEGIN
 	SET FOREIGN_KEY_CHECKS = 0;
-	TRUNCATE TABLE initial_records;
-    TRUNCATE TABLE verification_records;
-    TRUNCATE TABLE employment_records;
-    TRUNCATE TABLE external_records;
+	TRUNCATE TABLE graduates;
     SET FOREIGN_KEY_CHECKS = 1;
 END//
 DELIMITER ;
