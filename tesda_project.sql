@@ -22,7 +22,7 @@
 */
 
 -- CALL read_all_records();
--- employment_recordsexternal_recordsCALL clear_all_records();
+-- CALL clear_all_records();
 -- SET AUTOCOMMIT = ON;
 -- INSERT INTO initial_records (last_name, first_name, middle_name, full_name) VALUE ("Solayao", "Dave Andrew", "Alano", "Solayao, Dave Andrew Alano");
 
