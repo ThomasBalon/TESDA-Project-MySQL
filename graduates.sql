@@ -1,62 +1,6 @@
-/* CREATE TABLE `graduates` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `district` varchar(50) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
-  `tvi` varchar(255) DEFAULT NULL,
-  `qualification_title` varchar(255) DEFAULT NULL,
-  `sector` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `middle_name` varchar(255) DEFAULT NULL,
-  `extension_name` varchar(50) DEFAULT NULL,
-  `full_name` varchar(255) DEFAULT NULL,
-  `sex` varchar(50) DEFAULT NULL,
-  `birthdate` varchar(50) DEFAULT NULL,
-  `contact_number` varchar(16) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `scholarship_type` varchar(50) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `allocation` varchar(50) DEFAULT NULL,
-  `verification_means` varchar(50) DEFAULT NULL,
-  `verification_date` varchar(50) DEFAULT NULL,
-  `verification_status` varchar(50) DEFAULT NULL,
-  `follow_up_date_1` varchar(50) DEFAULT NULL,
-  `follow_up_date_2` varchar(50) DEFAULT NULL,
-  `response_status` varchar(50) DEFAULT NULL,
-  `not_interested_reason` varchar(255) DEFAULT NULL,
-  `referral_status` char(10) DEFAULT NULL,
-  `referral_date` varchar(50) DEFAULT NULL,
-  `no_referral_reason` varchar(255) DEFAULT NULL,
-  `invalid_contact` char(10) DEFAULT NULL,
-  `company_name` varchar(255) DEFAULT NULL,
-  `company_address` varchar(255) DEFAULT NULL,
-  `job_title` varchar(255) DEFAULT NULL,
-  `employment_status` varchar(255) DEFAULT NULL,
-  `hired_date` varchar(50) DEFAULT NULL,
-  `submitted_documents_date` varchar(50) DEFAULT NULL,
-  `interview_date` varchar(50) DEFAULT NULL,
-  `not_hired_reason` varchar(50) DEFAULT NULL,
-  `training_status` varchar(50) DEFAULT NULL,
-  `assessment_result` varchar(255) DEFAULT NULL,
-  `employment_before_training` varchar(50) DEFAULT NULL,
-  `occupation` varchar(255) DEFAULT NULL,
-  `employer_name` varchar(255) DEFAULT NULL,
-  `employment_type` varchar(255) DEFAULT NULL,
-  `date_hired` varchar(50) DEFAULT NULL,
-  `remarks` varchar(255) DEFAULT NULL,
-  `count` char(10) DEFAULT NULL,
-  `no_of_graduates` char(10) DEFAULT NULL,
-  `no_of_employed` char(10) DEFAULT NULL,
-  `verification` varchar(50) DEFAULT NULL,
-  `job_vacancies` char(10) DEFAULT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-*/
-
 -- CALL read_all_records();
 -- CALL clear_all_records();
 -- SET AUTOCOMMIT = ON;
--- INSERT INTO graduates (last_name, first_name, middle_name, extension_name, full_name) VALUE ("Dela Cruz", "Juan", "Antonio", "Sr.", "Dela Cruz Sr., Juan Antonio");
 
 /*
 RENAME TABLE scholarship_employment TO graduates;
@@ -95,6 +39,16 @@ DELIMITER ;
 
 /*
 DELIMITER //
+CREATE PROCEDURE `create_user`(IN _username VARCHAR(255), IN _password CHAR(255))
+BEGIN
+	INSERT INTO users (username, password) 
+    VALUES (_username, _password);
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
 CREATE PROCEDURE `clear_all_records`()
 BEGIN
 	SET FOREIGN_KEY_CHECKS = 0;
@@ -106,19 +60,18 @@ DELIMITER ;
 
 /*
 DELIMITER //
-CREATE PROCEDURE delete_record(IN _Id INT)
+CREATE PROCEDURE delete_record(IN _id INT)
 BEGIN
-	DELETE FROM initial_records WHERE Id = _Id;
+	DELETE FROM graduates WHERE id = _id;
 END//
 DELIMITER ;
 */
 
 /*
 DELIMITER //
-CREATE PROCEDURE get_new_record_id(IN _lastname VARCHAR(255), IN _firstname VARCHAR(255))
+CREATE PROCEDURE delete_records_all()
 BEGIN
-	SELECT Id FROM initial_records 
-    WHERE last_name = _lastname AND first_name = _firstname;
+	TRUNCATE `tesda_etrak_db`.`graduates`;
 END//
 DELIMITER ;
 */
@@ -133,7 +86,44 @@ BEGIN
             job_title, employment_status, hired_date, submitted_documents_date, interview_date, not_hired_reason, training_status, assessment_result, employment_before_training, occupation, 
             employer_name, employment_type, date_hired, remarks, count, no_of_graduates, no_of_employed, verification, job_vacancies 
     FROM graduates 
-    WHERE Id = _id;
+    WHERE id = _id;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER $$
+CREATE PROCEDURE `read_records`()
+BEGIN
+	SELECT id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title
+    FROM graduates;
+END$$
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
+CREATE PROCEDURE update_record(IN _id INT, IN verif_means VARCHAR(50), IN verif_date VARCHAR(50), IN verif_status VARCHAR(50), IN fwup_date1 VARCHAR(50), 
+								IN fwup_date2 VARCHAR(50), IN response VARCHAR(50), IN not_interested VARCHAR(255), IN ref_status CHAR(10), IN ref_date VARCHAR(50), 
+                                IN no_referral VARCHAR(255), IN invalid_con CHAR(10), IN comp_name VARCHAR(255), IN comp_address VARCHAR(255), IN job VARCHAR(255), 
+                                IN emp_status VARCHAR(255), IN hired VARCHAR(50), IN submitted_documents VARCHAR(50), IN interview VARCHAR(50), IN not_hired VARCHAR(50))
+BEGIN
+	UPDATE graduates 
+    SET verification_means = verif_means, verification_date = verif_date, verification_status = verif_status, follow_up_date_1 = fwup_date1, follow_up_date_2 = fwup_date2, 
+		response_status = response, not_interested_reason = not_interested, referral_status = ref_status, referral_date = ref_date, no_referral_reason = no_referral, 
+        invalid_contact = invalid_con, company_name = comp_name, company_address = comp_address, job_title = job, employment_status = emp_status, 
+        hired_date = hired, submitted_documents_date = submitted_documents, interview_date = interview, not_hired_reason = not_hired 
+    WHERE id = _id;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
+CREATE PROCEDURE get_new_record_id(IN _lastname VARCHAR(255), IN _firstname VARCHAR(255))
+BEGIN
+	SELECT Id FROM initial_records 
+    WHERE last_name = _lastname AND first_name = _firstname;
 END//
 DELIMITER ;
 */
@@ -256,4 +246,3 @@ BEGIN
 END//
 DELIMITER ;
 */
-
