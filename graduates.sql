@@ -78,6 +78,17 @@ DELIMITER ;
 
 /*
 DELIMITER //
+CREATE PROCEDURE login_user(IN _username VARCHAR(255))
+BEGIN
+	SELECT id, password, created 
+    FROM users 
+    WHERE username = _username;
+END//
+DELIMITER ;
+*/
+
+/*
+DELIMITER //
 CREATE PROCEDURE read_details(IN _id INT)
 BEGIN
 	SELECT district, city, tvi, qualification_title, sector, last_name, first_name, middle_name, extension_name, full_name, 
@@ -93,7 +104,7 @@ DELIMITER ;
 
 /*
 DELIMITER $$
-CREATE PROCEDURE `read_records`()
+CREATE PROCEDURE read_records()
 BEGIN
 	SELECT id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title
     FROM graduates;
