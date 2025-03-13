@@ -76,6 +76,23 @@ END//
 DELIMITER ;
 */
 
+-- DELIMITER //
+-- CREATE PROCEDURE import_records(IN searchQuery VARCHAR(255), IN _offset INT, IN _limit INT)
+-- BEGIN
+--     SELECT id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
+--     FROM graduates 
+--     WHERE (id LIKE CONCAT('%', searchQuery, '%') 
+--     OR last_name LIKE CONCAT('%', searchQuery, '%') 
+--     OR first_name LIKE CONCAT('%', searchQuery, '%') 
+--     OR middle_name LIKE CONCAT('%', searchQuery, '%') 
+--     OR extension_name LIKE CONCAT('%', searchQuery, '%') 
+--     OR employment_status LIKE CONCAT('%', searchQuery, '%') 
+--     OR allocation LIKE CONCAT('%', searchQuery, '%') 
+--     OR qualification_title LIKE CONCAT('%', searchQuery, '%'))
+--     LIMIT _offset, _limit;
+-- END//
+-- DELIMITER ;
+
 /*
 DELIMITER //
 CREATE PROCEDURE `import_records`(IN _created TIMESTAMP, IN _updated TIMESTAMP, IN _district VARCHAR(50), IN _city VARCHAR(50), IN _tvi VARCHAR(255), 
