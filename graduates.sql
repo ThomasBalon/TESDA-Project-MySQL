@@ -77,7 +77,7 @@ DELIMITER ;
 */
 
 -- DELIMITER //
--- CREATE PROCEDURE import_records(IN searchQuery VARCHAR(255), IN _offset INT, IN _limit INT)
+-- CREATE PROCEDURE search_records(IN searchQuery VARCHAR(255), IN _offset INT, IN _limit INT)
 -- BEGIN
 --     SELECT id, last_name, first_name, middle_name, extension_name, employment_status, allocation, qualification_title 
 --     FROM graduates 
