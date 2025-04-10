@@ -105,7 +105,7 @@ CREATE PROCEDURE `import_records`(IN _created TIMESTAMP, IN _updated TIMESTAMP, 
                                     IN _referral_date VARCHAR(50), IN _no_referral VARCHAR(255), IN _invalid_contact CHAR(10), IN _company_name VARCHAR(255), IN _company_address VARCHAR(255), 
                                     IN _job_title VARCHAR(255), IN _application VARCHAR(255), IN _withdrawn VARCHAR(255), IN _emp_status VARCHAR(255), IN _hired VARCHAR(50), 
                                     IN _submit_docs VARCHAR(50), IN _interview VARCHAR(50), IN _not_hired VARCHAR(50), IN _count CHAR(10), IN _graduates CHAR(10), 
-                                    IN _employed CHAR(10), IN _verification VARCHAR(50), IN _job_vacancies CHAR(10))
+                                    IN _employed CHAR(10), IN _verification VARCHAR(50), IN _job_vacancies CHAR(10), IN _remarks VARCHAR(255))
 BEGIN
 	INSERT INTO graduates (created_at, updated_at, district, city, tvi, 
 							qualification_title, sector, last_name, first_name, middle_name, 
@@ -117,7 +117,7 @@ BEGIN
                             referral_date, no_referral_reason, invalid_contact, company_name, company_address, 
                             job_title, application_status, withdrawn_reason, employment_status, hired_date, 
                             submitted_documents_date, interview_date, not_hired_reason, count, no_of_graduates, 
-                            no_of_employed, verification, job_vacancies) 
+                            no_of_employed, verification, job_vacancies, remarks) 
     VALUES (_created, _updated, _district, _city, _tvi, 
 			_qualification, _sector, _lastname, _firstname, _middlename, 
 			_extname, _fullname, _sex, _birthdate, _contactnum, 
@@ -128,7 +128,7 @@ BEGIN
 			_referral_date, _no_referral, _invalid_contact, _company_name, _company_address, 
 			_job_title, _application, _withdrawn, _emp_status, _hired, 
 			_submit_docs, _interview, _not_hired, _count, _graduates, 
-			_employed, _verification, _job_vacancies);
+			_employed, _verification, _job_vacancies, _remarks);
 END//
 DELIMITER ;
 */
